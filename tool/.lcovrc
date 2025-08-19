@@ -1,0 +1,5 @@
+# LCOV configuration file for bico project
+genhtml_title = bico - code coverage report
+genhtml_desc_html = Code coverage report for the bico project
+genhtml_branch_coverage = 1
+genhtml_function_coverage = 1

@@ -1,0 +1,39 @@
+{
+  // =============================================================================
+  // ⚠️  USER CONFIGURATION REQUIRED - MODIFY THESE PATHS FOR YOUR SETUP  ⚠️
+  // =============================================================================
+  "mounts": [
+    // 📁 UPDATE THIS PATH
+    "source=C:/Users/vor5hc/workspace/gen3_pk/pk_3rd_gen,target=/workspaces/bico-gtest-docker/project_under_test,type=bind"
+  ],
+
+  // =============================================================================
+  // Bico GTest Development Container Configuration
+  // =============================================================================
+  "name": "Bico GTest Docker",
+  // Build configuration
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {}
+  },
+  // Container runtime configuration
+  "runArgs": [
+    "--name", "bico-gtest-container"
+  ],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "google.gtest",
+        "ms-vscode.live-server"
+      ],
+      "settings": {
+        "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+        "C_Cpp.default.intelliSenseMode": "gcc-x64"
+      }
+    }
+  }
+}

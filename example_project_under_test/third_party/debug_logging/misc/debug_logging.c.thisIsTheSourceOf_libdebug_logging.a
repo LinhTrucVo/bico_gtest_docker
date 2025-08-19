@@ -1,0 +1,71 @@
+#include <debug_logging.h>
+#include <time.h>
+#include <string.h>
+
+// Global debug level
+static DebugLogLevel g_debug_level = DEBUG_LOG_LEVEL_NONE;
+
+// Module names for logging
+static const char* module_names[] = {
+    "SimpleCalc",
+    "ProgCalc", 
+    "CalcCheck",
+    "General"
+};
+
+// Level names for logging
+static const char* level_names[] = {
+    "NONE",
+    "ERROR", 
+    "WARN",
+    "INFO",
+    "DEBUG"
+};
+
+void debugLog_init(DebugLogLevel level) {
+    g_debug_level = level;
+}
+
+void debugLog_setLevel(DebugLogLevel level) {
+    g_debug_level = level;
+}
+
+DebugLogLevel debugLog_getLevel(void) {
+    return g_debug_level;
+}
+
+void debugLog_print(DebugLogModule module, DebugLogLevel level, const char* format, ...) {
+    // Check if logging is enabled for this level
+    if (level > g_debug_level) {
+        return;
+    }
+    
+    // Get current time
+    time_t now;
+    time(&now);
+    struct tm* local_time = localtime(&now);
+    
+    // Print timestamp, module, and level
+    printf("[%02d:%02d:%02d] [%s] [%s] ", 
+           local_time->tm_hour, 
+           local_time->tm_min, 
+           local_time->tm_sec,
+           module_names[module],
+           level_names[level]);
+    
+    // Print the actual message
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
+    
+    printf("\n");
+}
+
+void debugLog_printRaw(const char* format, ...) {
+    // Always print raw messages regardless of level
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
+}

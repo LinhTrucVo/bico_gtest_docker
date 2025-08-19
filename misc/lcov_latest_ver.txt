@@ -1,0 +1,30 @@
+apt install git make gcc perl
+
+sudo perl -MCPAN -e 'install qw(
+  Capture::Tiny
+  DateTime
+  Devel::Cover
+  Digest::MD5
+  File::Spec
+  JSON::XS
+  Cpanel::JSON::XS
+  JSON::PP
+  JSON
+  Memory::Process
+  Module::Load::Conditional
+  Scalar::Util
+  Time::HiRes
+  TimeDate
+)'
+
+
+wget https://github.com/linux-test-project/lcov/archive/refs/tags/v2.3.1.tar.gz -O lcov-2.3.1.tar.gz
+
+tar -xf lcov-2.3.1.tar.gz
+
+cd lcov-2.3.1
+
+make install
+
+/user/local/lcov --version
+
