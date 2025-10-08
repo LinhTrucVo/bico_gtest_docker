@@ -8,10 +8,10 @@ LABEL org.opencontainers.image.title=name
 LABEL org.opencontainers.image.version=version
 LABEL org.opencontainers.image.description=description
 
-ENV MY_PROXY_IP=rb-proxy-apac.bosch.com
-ENV MY_PROXY_PORT=8080
-ENV MY_PROXY_USER_NAME=vor5hc
-ENV MY_PROXY_PASSWORD=%40Bico3852201
+# ENV MY_PROXY_IP=...
+# ENV MY_PROXY_PORT=...
+# ENV MY_PROXY_USER_NAME=...
+# ENV MY_PROXY_PASSWORD=...
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV http_proxy=http://$MY_PROXY_IP:$MY_PROXY_PORT
@@ -60,4 +60,5 @@ RUN wget -P /workspaces/cmake_3.22.2 https://github.com/Kitware/CMake/releases/d
     ln -s /opt/cmake/cmake-3.22.2-linux-x86_64/bin/cmake /usr/local/bin/cmake
 
 # Set the entry point for the container
+
 CMD ["bash"]
