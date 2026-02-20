@@ -16,11 +16,11 @@ cmake --build . --target coverage
 
 echo ""
 echo -e "\e[33m=== Coverage Summary ===\e[0m"
-lcov --summary coverage_filtered.info
+lcov --summary coverage_filtered.info --rc lcov_branch_coverage=1
 
 echo ""
 echo -e "\e[35m=== Generating Test Summary Report with Coverage ===\e[0m"
-cd /workspaces/bico-gtest-docker
+cd /workspaces/bico_gtest_docker
 python3 -B tool/generate_test_summary.py \
     --test-results-dir "_build/output/gtest" \
     --coverage-report "_build/coverage/index.html" \

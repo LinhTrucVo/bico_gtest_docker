@@ -4,7 +4,7 @@
   // =============================================================================
   "mounts": [
     // 📁 UPDATE THIS PATH
-    "source=C:/Users/vor5hc/workspace/gen3_pk/pk_3rd_gen,target=/workspaces/bico-gtest-docker/project_under_test,type=bind"
+    "source=/home/vor5hc/sandbox/Bico_Protocol_Bridge,target=/workspaces/bico_gtest_docker/project_under_test,type=bind"
   ],
 
   // =============================================================================
@@ -19,8 +19,13 @@
   },
   // Container runtime configuration
   "runArgs": [
-    "--name", "bico-gtest-container"
+    "--name", "bico-gtest-container-personal",
+    "--privileged",
   ],
+
+  // Apply executable to all sh files in tool/
+  "postCreateCommand": "/postCreateCommand.sh",
+  "postStartCommand": "/entrypoint.sh",
 
   "customizations": {
     "vscode": {

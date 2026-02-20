@@ -48,10 +48,10 @@ set(CMAKE_C_FLAGS_DEBUG "-g -O0 -DDEBUG")
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
 
 if(ENABLE_COVERAGE)
-    # Add coverage compiler flags
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage -g -O0 -DDEBUG")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -g -O0 -DDEBUG")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+    # Add coverage compiler flags for branch coverage
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage -g -O0 -DDEBUG -fprofile-arcs -ftest-coverage -fno-inline -fno-inline-small-functions -fno-default-inline")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -g -O0 -DDEBUG -fprofile-arcs -ftest-coverage -fno-inline -fno-inline-small-functions -fno-default-inline")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage -lgcov")
     
     # Find required programs
     find_program(LCOV_PATH lcov)
@@ -68,25 +68,25 @@ if(ENABLE_COVERAGE)
     # Create coverage target
     add_custom_target(coverage
         # Cleanup lcov
-        COMMAND ${LCOV_PATH} --directory . --zerocounters
+        COMMAND ${LCOV_PATH} --directory . --zerocounters --rc lcov_branch_coverage=1
         
         # Run tests
         COMMAND ${CMAKE_CTEST_COMMAND} --verbose --output-on-failure || true
         
-        # Capture lcov counters and generate report
-        COMMAND ${LCOV_PATH} --directory . --capture --output-file coverage.info
+        # Capture lcov counters and generate report with branch coverage
+        COMMAND ${LCOV_PATH} --directory . --capture --output-file coverage.info --rc lcov_branch_coverage=1
         
         # Remove external files from coverage
-        COMMAND ${LCOV_PATH} --remove coverage.info '/usr/*' '/workspaces/googletest/*' '*/test/*' --output-file coverage_filtered.info
+        COMMAND ${LCOV_PATH} --remove coverage.info '/usr/*' '/workspaces/googletest/*' '*/test/*' --output-file coverage_filtered.info --rc lcov_branch_coverage=1
         
-        # Generate HTML report with full paths
-        COMMAND ${GENHTML_PATH} coverage_filtered.info --prefix ${CMAKE_BINARY_DIR} --output-directory coverage --config-file ${CMAKE_SOURCE_DIR}/tool/.lcovrc
+        # Generate HTML report with full paths and branch coverage
+        COMMAND ${GENHTML_PATH} coverage_filtered.info --prefix ${CMAKE_BINARY_DIR} --output-directory coverage --config-file ${CMAKE_SOURCE_DIR}/tool/.lcovrc --rc genhtml_branch_coverage=1
         
-        # Show summary
-        COMMAND ${LCOV_PATH} --summary coverage_filtered.info
+        # Show summary with branch coverage
+        COMMAND ${LCOV_PATH} --summary coverage_filtered.info --rc lcov_branch_coverage=1
         
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        COMMENT "Generating code coverage report"
+        COMMENT "Generating code coverage report with branch coverage"
     )
     
     # Make sure tests are built before coverage
@@ -94,6 +94,22 @@ if(ENABLE_COVERAGE)
 endif()
 
 # Add subdirectories
-add_subdirectory(example_project_under_test)
-# add_subdirectory(project_under_test/Honda/Master/App/rbd/pk/hgt/sw/MasterMcu/app/ASW/rbdHgtPkDiag/test/gtest)
-# add_subdirectory(project_under_test/Honda/UWB_AddOn/APP/SwFunctions/DiagMgmt/rbdOemDiagnostics/test/gtest)
+# add_subdirectory(example_project_under_test)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/adcDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/gpioDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/i2cMasterDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/i2cSlaveDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/nvmDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/pwmDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/serialDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/spiMasterDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer1Driver/spiSlaveDriver/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer2Service/configService/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer2Service/deserialize/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer2Service/nvmService/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer2Service/serialize/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer3Application/centralAppController/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer3Application/serialToAnalogApp/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer3Application/serialToDigitalApp/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer3Application/serialToI2CApp/6_test/gtest)
+add_subdirectory(project_under_test/3_swComp/layer3Application/serialToSPIApp/6_test/gtest)
