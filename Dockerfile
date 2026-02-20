@@ -11,7 +11,12 @@ LABEL org.opencontainers.image.description=description
 USER root
 
 RUN apt-get update
-RUN apt-get install -y lcov
+RUN apt-get install -y \
+    lcov
+
+# Clean up apt cache to reduce image size
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create a directory for the project
 WORKDIR /workspaces
