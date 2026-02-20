@@ -29,9 +29,9 @@ RUN wget -P /workspaces/cmake_3.22.2 https://github.com/Kitware/CMake/releases/d
 USER developer
 
 # Copy and set up entrypoint script (relative to .devcontainer/)
-COPY entrypoint.sh /entrypoint.sh
+COPY .devcontainer/entrypoint.sh /entrypoint.sh
 RUN sudo chmod +x /entrypoint.sh
-COPY postCreateCommand.sh /postCreateCommand.sh
+COPY .devcontainer/postCreateCommand.sh /postCreateCommand.sh
 RUN sudo chmod +x /postCreateCommand.sh
 
 # Set the entry point for the container
