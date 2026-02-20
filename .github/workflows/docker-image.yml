@@ -34,4 +34,4 @@ jobs:
         context: .
         file: Dockerfile
         push: true
-        tags: ghcr.io/volinhtruc/bico_gtest_docker:22.04_0.0.0
+        tags: ghcr.io/linhtrucvo/bico_gtest_docker:22.04_0.0.0
