@@ -11,7 +11,9 @@ $(dirname "$0")/build.sh
 
 echo ""
 echo "=== Running coverage analysis ==="
-cd ./_build
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+BUILD_DIR="$(dirname "$SCRIPT_DIR")/_build"
+cd "$BUILD_DIR"
 cmake --build . --target coverage
 
 echo ""
@@ -20,7 +22,7 @@ lcov --summary coverage_filtered.info --rc lcov_branch_coverage=1
 
 echo ""
 echo -e "\e[35m=== Generating Test Summary Report with Coverage ===\e[0m"
-cd /workspaces/bico_gtest_docker
+cd "$SCRIPT_DIR/.."
 python3 -B tool/generate_test_summary.py \
     --test-results-dir "_build/output/gtest" \
     --coverage-report "_build/coverage/index.html" \
