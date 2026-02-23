@@ -11,7 +11,7 @@ $(dirname "$0")/build.sh
 
 echo ""
 echo "=== Running coverage analysis ==="
-cd _build
+cd ./_build
 cmake --build . --target coverage
 
 echo ""
