@@ -1,6 +1,6 @@
 # remove whole _build folder but googletest folder -> do not build googletest again
 echo "=== Remove build folder but googletest and fff==="
-cd /workspaces/bico-gtest-docker && \
+cd /workspaces/bico_gtest_docker && \
 mv _build/googletest /tmp/googletest_backup 2>/dev/null || true && \
 mv _build/fff /tmp/fff_backup 2>/dev/null || true && \
 rm -rf _build && \
