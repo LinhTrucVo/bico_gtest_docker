@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Coverage script for bico-gtest-docker project
+# Coverage script for bico_gtest_docker project
 # Usage: ./coverage.sh
 
 set -e

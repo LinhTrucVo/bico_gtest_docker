@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22.2)
 
-project(bico-gtest-docker 
+project(bico_gtest_docker 
     VERSION 1.0.0
     DESCRIPTION "Calculator modules with GTest framework"
     LANGUAGES C CXX
