@@ -94,4 +94,4 @@ if(ENABLE_COVERAGE)
 endif()
 
 # Add subdirectories
-add_subdirectory(project_under_test/unittest_build)
+add_subdirectory(project_under_test/unittest)
